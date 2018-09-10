@@ -41,10 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardState.cs" />
-    <Compile Include="IMoveStrategy.cs" />
-    <Compile Include="LookAheadStrategy.cs" />
-    <Compile Include="MonteCarloMoveStrategy.cs" />
-    <Compile Include="RandomMoveStrategy.cs" />
+    <Compile Include="Strategies\BruteForceHeuristicsStrategy.cs" />
+    <Compile Include="Strategies\IMoveStrategy.cs" />
+    <Compile Include="Strategies\LookAheadStrategy.cs" />
+    <Compile Include="Strategies\MonteCarloMoveStrategy.cs" />
+    <Compile Include="Strategies\RandomMoveStrategy.cs" />
     <Compile Include="TicTacToeGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TreeNode.cs" />

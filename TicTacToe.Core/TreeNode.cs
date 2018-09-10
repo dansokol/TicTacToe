@@ -17,6 +17,7 @@ namespace TicTacToe.Core
 
         public decimal GamesPlayed { get; private set; }
         public decimal GamesWon { get; private set; }
+        public decimal Rank { get; set; }
 
         public decimal UCB1(decimal totalN)
         {

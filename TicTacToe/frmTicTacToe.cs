@@ -25,7 +25,7 @@ namespace TicTacToe
 
         private void ResetGame()
         {
-            _moveStrategy = new MonteCarloMoveStrategy();
+            _moveStrategy = new BruteForceHeuristicsStrategy(9);
             this.panelBoard.Controls.Clear();
             CreateTicTacToeBoard();
             _game = new TicTacToeGame();
@@ -61,13 +61,19 @@ namespace TicTacToe
             }
         }
 
-        private void DoComputerMove(int previousMove)
+        private async Task DoComputerMove(int previousMove)
         {
-            int nextMove = _moveStrategy.CalculateNextMove(_game, previousMove);
+            this.panelBoard.Enabled = false;
+            int nextMove = await Task.Run(() => {
+                return _moveStrategy.CalculateNextMove(_game, previousMove);
+            });
+            
             _moveStrategy.UpdateMove(nextMove);
             _buttons[nextMove].Text = _game.CurrentPlayer == 1 ? "X" : "O";
             _game.PerformMove(nextMove);
             CheckGameState();
+
+            this.panelBoard.Enabled = true;
         }
 
         private void CheckGameState()
@@ -83,7 +89,7 @@ namespace TicTacToe
             }
         }
 
-        private void B_Click(object sender, EventArgs e)
+        private async void B_Click(object sender, EventArgs e)
         {
             var button = sender as Button;
             int index = (int)button.Tag;
@@ -93,7 +99,7 @@ namespace TicTacToe
                 button.Text = _game.CurrentPlayer == 1 ? "X" : "O";
                 if (_game.PerformMove(index))
                 {
-                    DoComputerMove(index);
+                    await DoComputerMove(index);
                 }
 
                 CheckGameState();

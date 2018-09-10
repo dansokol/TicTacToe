@@ -8,13 +8,13 @@ namespace TicTacToe.Core
 {
     public class LookAheadStrategy : IMoveStrategy
     {
-        int _steps = 5;
+        int _searchDepth = 5;
 
         public LookAheadStrategy() { }
 
-        public LookAheadStrategy(int steps)
+        public LookAheadStrategy(int searchDepth)
         {
-            _steps = steps;
+            _searchDepth = searchDepth;
         }
 
         private int GetRank(TicTacToeGame game, int player)
@@ -33,7 +33,7 @@ namespace TicTacToe.Core
         private void BuildDecisionTree(TicTacToeGame game, int player, TreeNode<TicTacToeGame> node)
         {
             var moves = game.GetPossibleMoves();
-            foreach(var move in moves)
+            foreach (var move in moves)
             {
                 var copy = game.Copy();
                 var child = node.AddChild(copy);
@@ -61,7 +61,7 @@ namespace TicTacToe.Core
             if (node.Value.CurrentPlayer == player)
             {
                 int bestValue = -1;
-                foreach(var child in node.Children)
+                foreach (var child in node.Children)
                 {
                     int v = minimax(child, depth - 1, player);
                     bestValue = Math.Max(v, bestValue);
@@ -71,7 +71,7 @@ namespace TicTacToe.Core
             else
             {
                 int bestValue = 1;
-                foreach(var child in node.Children)
+                foreach (var child in node.Children)
                 {
                     int v = minimax(child, depth - 1, player);
                     bestValue = Math.Min(v, bestValue);
@@ -88,10 +88,10 @@ namespace TicTacToe.Core
             // now we have the decision tree, now what's the best move?
             TreeNode<TicTacToeGame> best = root.Children[0];
             int bestValue = -1;
-            foreach(var child in root.Children)
+            foreach (var child in root.Children)
             {
-                int v = minimax(child, _steps, game.CurrentPlayer);
-                if(v > bestValue)
+                int v = minimax(child, _searchDepth, game.CurrentPlayer);
+                if (v > bestValue)
                 {
                     bestValue = v;
                     best = child;
@@ -103,5 +103,5 @@ namespace TicTacToe.Core
         public void UpdateMove(int move)
         {
         }
-        }
+    }
 }

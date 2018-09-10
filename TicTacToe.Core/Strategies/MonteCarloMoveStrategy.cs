@@ -14,9 +14,11 @@ namespace TicTacToe.Core
         // save the tree for processing later
         TreeNode<TicTacToeGame> root = null;
         TreeNode<TicTacToeGame> currentRoot = null;
+        bool _useHeuristics;
 
-        public MonteCarloMoveStrategy()
+        public MonteCarloMoveStrategy(bool useHeuristics = false)
         {
+            _useHeuristics = useHeuristics;
         }
 
         public void RunSimulation(int player, bool ucb1 = false)
